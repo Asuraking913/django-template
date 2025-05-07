@@ -1,13 +1,13 @@
+from os import name
 from django.urls import path
-from .views import BaseView
-from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
+from .views import RegisterUserView 
 
 urlpatterns = [
-    path("", BaseView.as_view(), name="Base url view"),
-    path("api/schema/docs/", SpectacularAPIView.as_view(), name="schema"),
-    path(
-        "api/docs/",
-        SpectacularSwaggerView.as_view(url_name="schema"),
-        name="swagger-ui",
-    ),
+    # path("", BaseView.as_view(), name="Base url view"),
+    path("get-token/", TokenObtainPairView.as_view(), name='Obtain Token'),
+    path("refresh/", TokenRefreshView.as_view(), name='Refresh Token'),
+    path("verfiy-token/", TokenVerifyView.as_view(), name='Verify token'),
+
+    path("register/", RegisterUserView.as_view(), name='Register User'), 
 ]
