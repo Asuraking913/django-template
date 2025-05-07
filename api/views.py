@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from rest_framework.views import APIView
-from .serializers import RegisterUserSerializer
+from .serializers import RegisterUserSerializer, CreateListFoodMenuSerializer
 from rest_framework import generics
 from rest_framework.permissions import AllowAny
 
@@ -11,4 +11,5 @@ class RegisterUserView(generics.CreateAPIView):
 	serializer_class = RegisterUserSerializer
 	permission_classes = [AllowAny]
 
-
+class CreateFoodMenuView(generics.ListCreateAPIView):
+	serializer_class = CreateListFoodMenuSerializer

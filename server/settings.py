@@ -11,9 +11,17 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+# env variables
+cloud_api_key = os.getenv('API_KEY')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+import cloudinary
 
 
 # Quick-start development settings - unsuitable for production
@@ -148,3 +156,10 @@ SPECTACULAR_SETTINGS = {
 
 
 AUTH_USER_MODEL = 'api.User'  # Replace `api` with your app name
+
+cloudinary.config( 
+    cloud_name = "def5zz4q1", 
+    api_key = "467341326993928", 
+    api_secret = cloud_api_key, # Click 'View API Keys' above to copy your API secret
+    secure=True
+)

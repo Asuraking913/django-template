@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User
+from .models import FoodMenu, User
 
 class RegisterUserSerializer(serializers.ModelSerializer):
 
@@ -9,3 +9,12 @@ class RegisterUserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
+
+
+class CreateListFoodMenuSerializer(serializers.ModelSerializer):
+
+    image = serializers.URLField(required=True)
+    
+    class Meta:
+        model = FoodMenu
+        fields = ['name', 'price']

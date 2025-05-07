@@ -1,7 +1,8 @@
 from email.policy import default
 from django.db import models
 from uuid import uuid4
-from django.contrib.auth.models import AbstractUser, BaseUserManager, User
+from django.contrib.auth.models import AbstractUser, BaseUserManager
+from cloudinary import uploader
 
 
 def generate_id():
@@ -12,9 +13,15 @@ def generate_id():
 class FoodMenu(models.Model):
     id = models.CharField(max_length=255, default=generate_id, primary_key=True, unique=True)
     name = models.CharField(max_length=50, null=False)
-    time = models.CharField(max_length=50, null=False)
-    image = models.ImageField()
+    time = models.DateTimeField(auto_now=True)
+    image = models.URLField(blank=True, null=True)
     price = models.FloatField(null=False)
+
+    def save(self, *args, **kwargs):
+        if self.image:
+            upload_result = uploader.upload(self.image)
+            self.image=upload_result['secure_url']
+        super().save(*args, **kwargs)
 
 class Add_ons(models.Model):
     id = models.CharField(max_length=255, default = generate_id, primary_key = True, unique = True)
@@ -24,6 +31,7 @@ class Add_ons(models.Model):
 class Food_rider(models.Model):
     id = models.CharField(max_length=255, default=generate_id, primary_key=True, unique=True)
     name = models.CharField(max_length=255, null=False)
+
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password, username, **kwargs):
@@ -59,4 +67,6 @@ class User(AbstractUser):
 
     REQUIRED_FIELDS= ['email']
     objects=UserManager()
+
+
 
