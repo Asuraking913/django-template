@@ -2,7 +2,7 @@ from email.policy import default
 from django.db import models
 from uuid import uuid4
 from django.contrib.auth.models import AbstractUser, BaseUserManager
-from cloudinary import uploader
+
 
 
 def generate_id():
@@ -17,11 +17,11 @@ class FoodMenu(models.Model):
     image = models.URLField(blank=True, null=True)
     price = models.FloatField(null=False)
 
-    def save(self, *args, **kwargs):
-        if self.image:
-            upload_result = uploader.upload(self.image)
-            self.image=upload_result['secure_url']
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     if self.image:
+    #         upload_result = uploader.upload(self.image)
+    #         self.image=upload_result['secure_url']
+    #     super().save(*args, **kwargs)
 
 class Add_ons(models.Model):
     id = models.CharField(max_length=255, default = generate_id, primary_key = True, unique = True)

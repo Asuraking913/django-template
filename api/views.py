@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from rest_framework.views import APIView
+
+from api.models import FoodMenu
 from .serializers import RegisterUserSerializer, CreateListFoodMenuSerializer
 from rest_framework import generics
 from rest_framework.permissions import AllowAny
@@ -13,3 +15,6 @@ class RegisterUserView(generics.CreateAPIView):
 
 class CreateFoodMenuView(generics.ListCreateAPIView):
 	serializer_class = CreateListFoodMenuSerializer
+
+	def get_queryset(self):
+		return FoodMenu.objects.all()
